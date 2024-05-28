@@ -10,5 +10,8 @@ I build with static sfml, if you don't want to, just add the .dll files (found i
 This editor can be customized: edit the config/.config file as a json file.
  - In future also keyboard shortcuts will be customizable.
 
+# icon
+If you want to change the executable icon, check "https://stackoverflow.com/a/708382/22908909"
+
 # help
 In the help.txt you can find the keyboard shortcuts to use the editor and what you can modify in .cofing file to be valid.
