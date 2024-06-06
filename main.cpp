@@ -1,5 +1,5 @@
 #include "TextBox.hpp"
-#include "Cmd.hpp"
+#include "cmd.hpp"
 #include <fstream>
 #include <sstream>
 
@@ -65,20 +65,18 @@ int main(int argc, char* argv[])
     ));
     sf::View view;
     // deactivate window OpenGL context
-    window.setFramerateLimit(45);
-    window.setActive(false);
+    window.setFramerateLimit(60);
+    //window.setActive(false);
 
     //get current path and exe path
-    Cmd cmd;
     exe_path = argv[0];
     #ifdef WIN32
         exe_path = exe_path.substr(0, exe_path.rfind('\\'));
-        current_path = cmd.execute("cd");
+        current_path = execute("cd");
     #else
         exe_path = exe_path.substr(0, exe_path.rfind('/'));
-        current_path = cmd.execute("pwd");
+        current_path = execute("pwd");
     #endif
-	cmd.close();
 	
 	font = new sf::Font();
 	if(!font->loadFromFile(exe_path + "/config/font.otf"))
@@ -100,8 +98,10 @@ int main(int argc, char* argv[])
 	show_tabs = false;
 	
     // launch the rendering thread
+    /*
     sf::Thread thread(renderingThread, &window);
     thread.launch();
+    */
 
     bool move_window = false;
     sf::Vector2i mouse_window_diff;
@@ -109,7 +109,7 @@ int main(int argc, char* argv[])
     sf::Event e;
     while(window.isOpen())
     {
-        while(window.waitEvent(e))
+        while(window.pollEvent(e))
         {
 			if(e.type == sf::Event::Resized)
             {
@@ -204,7 +204,6 @@ int main(int argc, char* argv[])
 			textbox[index]->listen(e);
         }
 		
-		/*
 		//clearing
         window.clear(sf::Color::White);
 
@@ -213,7 +212,6 @@ int main(int argc, char* argv[])
 
         //displaying
         window.display();
-		*/
     }
     return 0;
 }

@@ -46,7 +46,7 @@ TextBox::TextBox(sf::RenderWindow* window): MyObject(window)
 	background_rect.setSize(text_view.getSize());
 	selection_rect.setSize({0.f, line_height});
 
-	lines.push_back("int main()");
+	lines.push_back("");
 	ty = 0;
 	tx = 0;
 	text_select = false;
@@ -67,7 +67,7 @@ void TextBox::draw()
 	win->draw(background_rect);
 	text.setFillColor(text_color);
 	
-	size_t n = (text_view.getCenter().x + text_view.getSize().x*0.5f) / line_height + 1;
+	size_t n = (text_view.getCenter().y + text_view.getSize().y*0.5f) / line_height + 1;
 	size_t i = (text_view.getCenter().y - text_view.getSize().y*0.5f) / line_height;
 	size_t ii = 0, ic;
 	while(ii < intervals.size())
@@ -447,12 +447,12 @@ void TextBox::setPosition(sf::Vector2f pos)
 {
 	text_view_pos = pos;
 	
-	text_view.setViewport(sf::FloatRect{
+	text_view.setViewport(sf::FloatRect(
 		pos.x / win->getSize().x,
 		pos.y / win->getSize().y,
-		text_view.getViewport().getSize().x,
-		text_view.getViewport().getSize().y
-	});
+		text_view.getViewport().width,
+		text_view.getViewport().height
+	));
 }
 void TextBox::setSize(sf::Vector2f size)
 {
@@ -462,8 +462,8 @@ void TextBox::setSize(sf::Vector2f size)
 	};
 
 	text_view.setViewport(sf::FloatRect{
-		text_view.getViewport().getPosition().x,
-		text_view.getViewport().getPosition().y,
+		text_view.getViewport().left,
+		text_view.getViewport().top,
 		size.x / win->getSize().x,
 		size.y / win->getSize().y
 	});
